@@ -5,12 +5,12 @@ import { tsParticles } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
 import { loadImageShape } from "@tsparticles/shape-image";
 
-// SVG لشكل السباركل (4 أطراف) مع توهج بسيط، متحول لـ Data URI
+// SVG لشكل السباركل الطولي (ارتفاع أكبر من العرض) مع توهج
 const sparkleSvg = `
-<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="120" viewBox="0 0 60 120">
   <defs>
     <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feGaussianBlur stdDeviation="2.5" result="blur" />
       <feMerge>
         <feMergeNode in="blur" />
         <feMergeNode in="SourceGraphic" />
@@ -18,7 +18,7 @@ const sparkleSvg = `
     </filter>
   </defs>
   <path
-    d="M50 5 C50 35, 50 35, 95 50 C50 65, 50 65, 50 95 C50 65, 50 65, 5 50 C50 35, 50 35, 50 5 Z"
+    d="M30 2 C30 45, 30 45, 58 60 C30 75, 30 75, 30 118 C30 75, 30 75, 2 60 C30 45, 30 45, 30 2 Z"
     fill="#ffffff"
     filter="url(#glow)"
   />
@@ -28,6 +28,9 @@ const sparkleSvg = `
 const sparkleDataUri = `data:image/svg+xml;base64,${
   typeof window !== "undefined" ? btoa(sparkleSvg) : ""
 }`;
+
+// أقصى عدد نجوم مسموح بيه في الصفحة في أي وقت
+const MAX_PARTICLES = 100;
 
 const options = {
   fullScreen: false,
@@ -69,6 +72,10 @@ const options = {
         area: 800,
       },
       value: 60,
+      limit: {
+        mode: "delete", // لما يتعدى الليميت، بيتشال أقدم عنصر بدل ما يستمر يزيد
+        value: MAX_PARTICLES,
+      },
     },
     opacity: {
       value: { min: 0.2, max: 1 },
@@ -84,8 +91,8 @@ const options = {
       options: {
         image: {
           src: sparkleDataUri,
-          width: 100,
-          height: 100,
+          width: 60,
+          height: 120,
         },
       },
     },
