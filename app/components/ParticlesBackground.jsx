@@ -5,7 +5,6 @@ import { tsParticles } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
 import { loadImageShape } from "@tsparticles/shape-image";
 
-// SVG لشكل السباركل الطولي (ارتفاع أكبر من العرض) مع توهج
 const sparkleSvg = `
 <svg xmlns="http://www.w3.org/2000/svg" width="60" height="120" viewBox="0 0 60 120">
   <defs>
@@ -29,7 +28,6 @@ const sparkleDataUri = `data:image/svg+xml;base64,${
   typeof window !== "undefined" ? btoa(sparkleSvg) : ""
 }`;
 
-// أقصى عدد نجوم مسموح بيه في الصفحة في أي وقت
 const MAX_PARTICLES = 100;
 
 const options = {
@@ -50,7 +48,9 @@ const options = {
     },
   },
   particles: {
-    color: { value: "#ffffff" },
+    color: {
+      value: ["#ffffff", "#ffffff", "#ffffff", "#dce8ff", "#e9dcff"],
+    },
     links: {
       color: "#ffffff",
       distance: 150,
@@ -63,7 +63,7 @@ const options = {
       enable: true,
       outModes: "out",
       random: false,
-      speed: 1.2,
+      speed: 1.4,
       straight: false,
     },
     number: {
@@ -73,12 +73,12 @@ const options = {
       },
       value: 60,
       limit: {
-        mode: "delete", // لما يتعدى الليميت، بيتشال أقدم عنصر بدل ما يستمر يزيد
+        mode: "delete",
         value: MAX_PARTICLES,
       },
     },
     opacity: {
-      value: { min: 0.2, max: 1 },
+      value: { min: 0.15, max: 0.95 },
       animation: {
         enable: true,
         speed: 1.5,
