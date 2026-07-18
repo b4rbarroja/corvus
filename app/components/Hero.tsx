@@ -5,7 +5,7 @@ import ParticlesBackground from "./ParticlesBackground";
 
 export default function Hero() {
   return (
-    <section className="relative flex-1 flex items-center min-h-[600px] sm:min-h-[700px] lg:min-h-screen py-16 md:py-20 lg:py-0 overflow-hidden bg-background bg-noise">
+    <section className="relative flex-1 flex items-start min-h-[600px] sm:min-h-[700px] lg:min-h-screen pt-6 pb-16 md:pt-8 md:pb-20 lg:py-0 overflow-hidden bg-background bg-noise">
       <div className="absolute inset-0 z-0">
         <ParticlesBackground />
       </div>
