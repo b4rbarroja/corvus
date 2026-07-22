@@ -1,5 +1,4 @@
 import Continer from "./layout/Container";
-import ParticlesBackground from "./ParticlesBackground";
 import { ReactNode } from "react";
 import { ArrowRight, Quote, Star, UserRound } from "lucide-react";
 
@@ -64,9 +63,6 @@ function Stars({ rating }: { rating: number }) {
 export default function Testimonials() {
   return (
     <section className="relative overflow-hidden bg-background bg-noise py-24">
-      <div className="absolute inset-0 z-0">
-        <ParticlesBackground id="testimonials-particles" />
-      </div>
       <Continer className="relative z-10">
         {/* Header */}
         <div className="flex flex-col justify-between gap-10 border-b border-border pb-10 lg:flex-row lg:items-end">
