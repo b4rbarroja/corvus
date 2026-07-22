@@ -62,7 +62,7 @@ function Stars({ rating }: { rating: number }) {
 
 export default function Testimonials() {
   return (
-    <section className="relative overflow-hidden bg-background bg-noise py-24">
+    <section className="relative overflow-hidden bg-background bg-noise py-12 md:py-16">
       <Continer className="relative z-10">
         {/* Header */}
         <div className="flex flex-col justify-between gap-10 border-b border-border pb-10 lg:flex-row lg:items-end">
