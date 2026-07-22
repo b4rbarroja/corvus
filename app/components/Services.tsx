@@ -1,5 +1,4 @@
 import Continer from "./layout/Container";
-import ParticlesBackground from "./ParticlesBackground";
 import { ReactNode } from "react";
 import {
   Boxes,
@@ -66,9 +65,6 @@ const services: Service[] = [
 export default function Services() {
   return (
     <section className="relative overflow-hidden bg-background bg-noise py-12 md:py-16">
-      <div className="absolute inset-0 z-0">
-        <ParticlesBackground id="services-particles" />
-      </div>
       <Continer className="relative z-10">
         {/* Header */}
         <div className="flex flex-col justify-between gap-8 border-b border-border pb-10 md:gap-10 lg:flex-row lg:items-end">

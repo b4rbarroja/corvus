@@ -1,5 +1,4 @@
 import Continer from "./layout/Container";
-import ParticlesBackground from "./ParticlesBackground";
 import { UserRound } from "lucide-react";
 
 interface Member {
@@ -40,9 +39,6 @@ const team: Member[] = [
 export default function TeamWork() {
   return (
     <section className="relative overflow-hidden bg-background bg-noise py-12 md:py-16">
-      <div className="absolute inset-0 z-0">
-        <ParticlesBackground id="team-particles" />
-      </div>
       <Continer className="relative z-10">
         {/* Header */}
         <div className="flex flex-col justify-between gap-8 border-b border-border pb-10 md:gap-10 lg:flex-row lg:items-end">
