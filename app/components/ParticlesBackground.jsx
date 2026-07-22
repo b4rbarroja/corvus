@@ -63,7 +63,7 @@ const options = {
       enable: true,
       outModes: "out",
       random: false,
-      speed: 1.4,
+      speed: 0.5,
       straight: false,
     },
     number: {
@@ -78,10 +78,10 @@ const options = {
       },
     },
     opacity: {
-      value: { min: 0.15, max: 0.95 },
+      value: { min: 0.05, max: 0.5 },
       animation: {
         enable: true,
-        speed: 1.5,
+        speed: 1,
         sync: false,
         startValue: "random",
       },
@@ -97,10 +97,10 @@ const options = {
       },
     },
     size: {
-      value: { min: 3, max: 12 },
+      value: { min: 1.5, max: 6 },
       animation: {
         enable: true,
-        speed: 3,
+        speed: 2,
         sync: false,
         startValue: "random",
       },
@@ -109,28 +109,37 @@ const options = {
   detectRetina: true,
 };
 
-export default function ParticlesBackground() {
+export default function ParticlesBackground({ id = "tsparticles" }) {
   const initialized = useRef(false);
 
   useEffect(() => {
     if (initialized.current) return;
     initialized.current = true;
 
+    let container = null;
+    let isMounted = true;
+
     (async () => {
       await loadSlim(tsParticles);
       await loadImageShape(tsParticles);
-      await tsParticles.load({ id: "tsparticles", options });
+
+      if (isMounted) {
+        container = await tsParticles.load({ id, options });
+      }
     })();
 
     return () => {
-      tsParticles.destroy("tsparticles");
+      isMounted = false;
+      if (container) {
+        container.destroy();
+      }
     };
   }, []);
 
   return (
     <div
-      id="tsparticles"
-      className="fixed inset-0 pointer-events-none"
+      id={id}
+      className="absolute inset-0 pointer-events-none"
       style={{ zIndex: 0 }}
     />
   );
