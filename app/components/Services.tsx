@@ -1,61 +1,473 @@
 import Continer from "./layout/Container";
 import { ReactNode } from "react";
-import {
-  Boxes,
-  LayoutTemplate,
-  Cloud,
-  Cog,
-  Smartphone,
-  ShieldCheck,
-  ArrowRight,
-} from "lucide-react";
 
-interface Service {
-  index: string;
-  icon: ReactNode;
+interface Feature {
+  fig: string;
+  illustration: ReactNode;
   title: string;
   description: string;
 }
 
-const services: Service[] = [
+/* ---------- Isometric line-art illustrations ---------- */
+
+function StackedLayersIllustration() {
+  return (
+    <svg
+      viewBox="0 0 320 300"
+      fill="none"
+      className="h-56 w-full max-w-[280px] text-white/25"
+    >
+      <path
+        d="M160 30 L280 96 L160 162 L40 96 Z"
+        stroke="currentColor"
+        strokeWidth="1"
+      />
+      <ellipse
+        cx="160"
+        cy="96"
+        rx="52"
+        ry="16"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.6"
+      />
+      <path
+        d="M118 90 Q160 108 202 90"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.7"
+      />
+      <path
+        d="M126 100 Q160 114 194 100"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.5"
+      />
+      <line
+        x1="40"
+        y1="96"
+        x2="40"
+        y2="118"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeDasharray="2 4"
+      />
+      <line
+        x1="280"
+        y1="96"
+        x2="280"
+        y2="118"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeDasharray="2 4"
+      />
+      {[0, 1, 2, 3, 4, 5, 6].map((i) => {
+        const y = 118 + i * 15;
+        return (
+          <path
+            key={i}
+            d={`M40 ${y} L160 ${y + 33} L280 ${y} L280 ${y + 6} L160 ${y + 39} L40 ${y + 6} Z`}
+            stroke="currentColor"
+            strokeWidth="1"
+            opacity={0.85 - i * 0.08}
+          />
+        );
+      })}
+    </svg>
+  );
+}
+
+function CubeClusterIllustration() {
+  const cube = (cx: number, cy: number, s: number, opacity: number) => {
+    const top = `M${cx} ${cy - s} L${cx + s} ${cy - s / 2} L${cx} ${cy} L${cx - s} ${cy - s / 2} Z`;
+    const left = `M${cx - s} ${cy - s / 2} L${cx} ${cy} L${cx} ${cy + s} L${cx - s} ${cy + s / 2} Z`;
+    const right = `M${cx + s} ${cy - s / 2} L${cx} ${cy} L${cx} ${cy + s} L${cx + s} ${cy + s / 2} Z`;
+    return (
+      <g stroke="currentColor" strokeWidth="1" opacity={opacity}>
+        <path d={top} />
+        <path d={left} />
+        <path d={right} />
+        <circle cx={cx} cy={cy - s} r="2" fill="currentColor" opacity="0.6" />
+      </g>
+    );
+  };
+  return (
+    <svg
+      viewBox="0 0 320 300"
+      fill="none"
+      className="h-56 w-full max-w-[280px] text-white/25"
+    >
+      {cube(160, 90, 42, 0.9)}
+      {cube(112, 150, 42, 0.7)}
+      {cube(208, 150, 42, 0.7)}
+      {cube(160, 195, 42, 0.55)}
+    </svg>
+  );
+}
+
+function SpeedPanelsIllustration() {
+  const bigPanels = [
+    { dx: -30, h: 190, o: 0.95 },
+    { dx: -12, h: 170, o: 0.8 },
+    { dx: 6, h: 150, o: 0.65 },
+  ];
+  const bars = Array.from({ length: 14 }).map((_, i) => ({
+    dx: 22 + i * 8,
+    h: 70 - i * 3,
+    o: 0.6 - i * 0.02,
+  }));
+  return (
+    <svg
+      viewBox="0 0 320 300"
+      fill="none"
+      className="h-56 w-full max-w-[280px] text-white/25"
+    >
+      <g transform="translate(150 230)">
+        {bigPanels.map((p, i) => (
+          <path
+            key={i}
+            d={`M${p.dx} 0 L${p.dx} ${-p.h} L${p.dx + 30} ${-p.h - 15} L${p.dx + 30} -15 Z`}
+            stroke="currentColor"
+            strokeWidth="1"
+            opacity={p.o}
+          />
+        ))}
+        {bars.map((b, i) => (
+          <path
+            key={i}
+            d={`M${b.dx} 0 L${b.dx} ${-b.h} L${b.dx + 6} ${-b.h - 3} L${b.dx + 6} -3 Z`}
+            stroke="currentColor"
+            strokeWidth="1"
+            opacity={Math.max(b.o, 0.15)}
+          />
+        ))}
+      </g>
+    </svg>
+  );
+}
+
+function ScreenWireframeIllustration() {
+  return (
+    <svg
+      viewBox="0 0 320 300"
+      fill="none"
+      className="h-56 w-full max-w-[280px] text-white/25"
+    >
+      {/* isometric flat panel */}
+      <path
+        d="M160 60 L260 112 L160 164 L60 112 Z"
+        stroke="currentColor"
+        strokeWidth="1"
+      />
+      <path
+        d="M60 112 L60 132 L160 184 L160 164 Z"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.6"
+      />
+      <path
+        d="M260 112 L260 132 L160 184 L160 164 Z"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.6"
+      />
+      {/* wireframe layout lines on top face */}
+      <path
+        d="M110 100 L130 90"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.8"
+      />
+      <path
+        d="M140 108 L190 108"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.6"
+      />
+      <path
+        d="M130 122 L175 122"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.5"
+      />
+      <rect
+        x="132"
+        y="70"
+        width="16"
+        height="10"
+        transform="skewX(-20)"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.7"
+      />
+      {/* cursor dot */}
+      <circle cx="210" cy="95" r="3" fill="currentColor" opacity="0.7" />
+      <path
+        d="M210 95 L228 82"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeDasharray="2 3"
+        opacity="0.5"
+      />
+    </svg>
+  );
+}
+
+function CloudNetworkIllustration() {
+  const nodes = [
+    { x: 160, y: 70 },
+    { x: 220, y: 110 },
+    { x: 100, y: 110 },
+    { x: 160, y: 150 },
+    { x: 230, y: 170 },
+    { x: 90, y: 170 },
+  ];
+  return (
+    <svg
+      viewBox="0 0 320 300"
+      fill="none"
+      className="h-56 w-full max-w-[280px] text-white/25"
+    >
+      <ellipse
+        cx="160"
+        cy="120"
+        rx="100"
+        ry="55"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.35"
+      />
+      <ellipse
+        cx="160"
+        cy="120"
+        rx="70"
+        ry="30"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.3"
+      />
+      <line
+        x1="160"
+        y1="70"
+        x2="220"
+        y2="110"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.5"
+      />
+      <line
+        x1="160"
+        y1="70"
+        x2="100"
+        y2="110"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.5"
+      />
+      <line
+        x1="220"
+        y1="110"
+        x2="160"
+        y2="150"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.5"
+      />
+      <line
+        x1="100"
+        y1="110"
+        x2="160"
+        y2="150"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.5"
+      />
+      <line
+        x1="160"
+        y1="150"
+        x2="230"
+        y2="170"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.4"
+      />
+      <line
+        x1="160"
+        y1="150"
+        x2="90"
+        y2="170"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.4"
+      />
+      {nodes.map((n, i) => (
+        <circle
+          key={i}
+          cx={n.x}
+          cy={n.y}
+          r="4"
+          stroke="currentColor"
+          strokeWidth="1"
+          fill="black"
+          opacity="0.9"
+        />
+      ))}
+    </svg>
+  );
+}
+
+function MobileDeviceIllustration() {
+  return (
+    <svg
+      viewBox="0 0 320 300"
+      fill="none"
+      className="h-56 w-full max-w-[280px] text-white/25"
+    >
+      {/* isometric phone body */}
+      <path
+        d="M140 50 L200 78 L200 220 L140 192 Z"
+        stroke="currentColor"
+        strokeWidth="1"
+      />
+      <path
+        d="M200 78 L216 70 L216 212 L200 220 Z"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.6"
+      />
+      <path
+        d="M140 50 L156 42 L216 70 L200 78 Z"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.6"
+      />
+      {/* screen content lines */}
+      <line
+        x1="150"
+        y1="80"
+        x2="190"
+        y2="96"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.5"
+      />
+      <line
+        x1="150"
+        y1="98"
+        x2="190"
+        y2="114"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.4"
+      />
+      <line
+        x1="150"
+        y1="116"
+        x2="180"
+        y2="130"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.4"
+      />
+      <rect
+        x="148"
+        y="150"
+        width="34"
+        height="18"
+        transform="skewY(11)"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.6"
+      />
+    </svg>
+  );
+}
+
+function NeuralCoreIllustration() {
+  return (
+    <svg
+      viewBox="0 0 320 300"
+      fill="none"
+      className="h-56 w-full max-w-[280px] text-white/25"
+    >
+      <path
+        d="M160 60 L240 105 L240 175 L160 220 L80 175 L80 105 Z"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.7"
+      />
+      <path
+        d="M160 100 L200 122 L200 158 L160 180 L120 158 L120 122 Z"
+        stroke="currentColor"
+        strokeWidth="1"
+      />
+      <circle cx="160" cy="140" r="6" fill="currentColor" opacity="0.7" />
+      {[
+        [160, 100],
+        [200, 122],
+        [200, 158],
+        [160, 180],
+        [120, 158],
+        [120, 122],
+      ].map(([x, y], i) => (
+        <g key={i}>
+          <line
+            x1="160"
+            y1="140"
+            x2={x}
+            y2={y}
+            stroke="currentColor"
+            strokeWidth="1"
+            opacity="0.5"
+          />
+          <circle cx={x} cy={y} r="3" fill="currentColor" opacity="0.6" />
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+/* ---------- Data: our actual services ---------- */
+
+const features: Feature[] = [
   {
-    index: "01",
-    icon: <Boxes className="h-9 w-9" strokeWidth={1} />,
+    fig: "FIG 0.1",
+    illustration: <StackedLayersIllustration />,
     title: "Software Development",
     description:
       "Custom software built with scalable architecture and clean code.",
   },
   {
-    index: "02",
-    icon: <LayoutTemplate className="h-9 w-9" strokeWidth={1} />,
+    fig: "FIG 0.2",
+    illustration: <ScreenWireframeIllustration />,
     title: "UI/UX Design",
     description:
       "Human-centered design that combines beauty, clarity, and conversion.",
   },
   {
-    index: "03",
-    icon: <Cloud className="h-9 w-9" strokeWidth={1} />,
+    fig: "FIG 0.3",
+    illustration: <CloudNetworkIllustration />,
     title: "Cloud Solutions",
     description:
       "Scalable, secure, and reliable cloud infrastructure that grows with you.",
   },
   {
-    index: "04",
-    icon: <Cog className="h-9 w-9" strokeWidth={1} />,
+    fig: "FIG 0.4",
+    illustration: <CubeClusterIllustration />,
     title: "SaaS Products",
     description:
       "Market-ready SaaS platforms built to solve real business needs.",
   },
   {
-    index: "05",
-    icon: <Smartphone className="h-9 w-9" strokeWidth={1} />,
+    fig: "FIG 0.5",
+    illustration: <MobileDeviceIllustration />,
     title: "Mobile Development",
     description:
       "Cross-platform mobile apps that deliver smooth performance and native feel.",
   },
   {
-    index: "06",
-    icon: <ShieldCheck className="h-9 w-9" strokeWidth={1} />,
+    fig: "FIG 0.6",
+    illustration: <NeuralCoreIllustration />,
     title: "AI Integration",
     description:
       "Intelligent systems and automation that enhance decision-making.",
@@ -64,85 +476,43 @@ const services: Service[] = [
 
 export default function Services() {
   return (
-    <section className="relative overflow-hidden bg-background bg-noise py-12 md:py-16">
+    <section className="relative overflow-hidden bg-background bg-noise py-24">
       <Continer className="relative z-10">
-        {/* Header */}
-        <div className="flex flex-col justify-between gap-8 border-b border-border pb-10 md:gap-10 lg:flex-row lg:items-end">
-          <div>
-            <div className="mb-5 flex items-center gap-2 font-mono text-xs font-medium tracking-[0.2em] text-accent">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-              SERVICES
-            </div>
-            <h2 className="font-heading text-4xl font-medium leading-[1.1] tracking-tight sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl">
-              Our services,
-              <br />
-              engineered for <span className="text-accent">impact.</span>
-            </h2>
-            <p className="font-sans mt-5 max-w-md text-sm leading-relaxed text-foreground-secondary sm:text-base xl:text-lg">
-              We design, build, and scale digital systems that solve real
-              problems and drive measurable results.
-            </p>
-          </div>
-
-          <div className="flex flex-col items-start gap-5 lg:items-end lg:text-right">
-            <p className="font-sans max-w-xs text-sm leading-relaxed text-foreground-secondary">
-              End-to-end software engineering services tailored to your goals
-              and built for the future.
-            </p>
-            <a
-              href="#work"
-              className="group inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-border-strong hover:bg-surface"
-            >
-              Explore Our Work
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </a>
-          </div>
-        </div>
-
-        {/* Cards grid */}
-        <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
-          {services.map((service) => (
-            <div
-              key={service.index}
-              className="group relative flex flex-col justify-between rounded-2xl border border-border bg-surface p-6 transition-colors hover:border-border-strong hover:bg-background-secondary md:p-8"
-            >
-              <div>
-                <span className="text-xs font-medium tracking-widest text-accent">
-                  {service.index}
+        <div className="grid grid-cols-1 border-border sm:grid-cols-2 lg:grid-cols-3">
+          {features.map((feature, i) => {
+            const col = i % 3; // 0, 1, 2 (at lg breakpoint)
+            const isLastRow = i >= 3; // rows: [0,1,2] then [3,4,5]
+            return (
+              <div
+                key={feature.fig}
+                className={[
+                  "flex flex-col border-t border-border py-12 first:border-t-0",
+                  "sm:px-8 lg:px-10",
+                  col === 0 ? "lg:border-l-0 lg:pl-0" : "lg:border-l",
+                  col !== 2 ? "" : "lg:pr-0",
+                  !isLastRow ? "lg:border-t-0" : "lg:border-t",
+                  i === 1 || i === 3 ? "sm:border-l-0" : "",
+                ].join(" ")}
+              >
+                <span className="font-mono text-xs tracking-[0.15em] text-foreground-secondary/60">
+                  {feature.fig}
                 </span>
-                <div className="mt-6 text-foreground">{service.icon}</div>
-                <h3 className="font-heading mt-6 text-lg font-medium text-foreground md:text-xl">
-                  {service.title}
-                </h3>
-                <p className="font-sans mt-3 text-sm leading-relaxed text-foreground-secondary">
-                  {service.description}
-                </p>
-              </div>
 
-              <div className="mt-8 flex h-9 w-9 items-center justify-center rounded-full border border-border text-foreground-secondary transition-all group-hover:translate-x-1 group-hover:border-border-strong group-hover:text-foreground">
-                <ArrowRight className="h-4 w-4" />
-              </div>
-            </div>
-          ))}
-        </div>
+                <div className="mt-4 flex items-center justify-center">
+                  {feature.illustration}
+                </div>
 
-        {/* Bottom CTA banner */}
-        <div className="relative mt-5 flex flex-col items-start justify-between gap-6 overflow-hidden rounded-2xl border border-border bg-surface p-6 sm:flex-row sm:items-center md:p-8">
-          <div className="relative">
-            <h4 className="font-heading text-xl font-medium text-foreground">
-              Have a challenge in mind?
-            </h4>
-            <p className="mt-1 text-sm text-foreground-secondary">
-              Let&apos;s build something powerful together.
-            </p>
-          </div>
-          <a
-            href="#contact"
-            className="group relative inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition-transform hover:scale-[1.02]"
-          >
-            Start a Project
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </a>
+                <div className="mt-10">
+                  <h3 className="font-heading text-base font-medium text-foreground">
+                    {feature.title}
+                  </h3>
+                  <p className="font-sans mt-3 max-w-xs text-sm leading-relaxed text-foreground-secondary">
+                    {feature.description}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </Continer>
     </section>
