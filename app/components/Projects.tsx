@@ -204,7 +204,7 @@ export default function Projects() {
             </p>
             <a
               href="#all-projects"
-              className="group inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-border-strong hover:bg-surface"
+              className="inline-flex items-center gap-2 border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-border-strong hover:bg-surface"
             >
               View All Projects
             </a>
@@ -212,12 +212,12 @@ export default function Projects() {
         </div>
 
         {/* Projects grid */}
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
             <a
               key={project.index}
               href="#"
-              className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-surface transition-colors hover:border-border-strong hover:bg-background-secondary"
+              className="group relative flex flex-col border border-border bg-transparent transition-colors hover:border-border-strong hover:bg-white/[0.02]"
             >
               <div className="relative h-44 w-full border-b border-border bg-background-secondary/60 sm:h-52 lg:h-56">
                 <span className="absolute left-4 top-4 z-10 text-xs font-medium tracking-widest text-accent">
@@ -258,7 +258,7 @@ export default function Projects() {
           </div>
           <a
             href="#contact"
-            className="group relative inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition-transform hover:scale-[1.02]"
+            className="relative inline-flex items-center gap-2 bg-foreground px-6 py-3 text-sm font-medium text-background transition-transform hover:scale-[1.02]"
           >
             Start a Project
           </a>

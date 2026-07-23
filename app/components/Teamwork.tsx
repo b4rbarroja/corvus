@@ -66,7 +66,7 @@ export default function TeamWork() {
             </p>
             <a
               href="#contact"
-              className="group inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-border-strong hover:bg-surface"
+              className="inline-flex items-center gap-2 border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-border-strong hover:bg-surface"
             >
               Work With Us
             </a>
@@ -74,11 +74,11 @@ export default function TeamWork() {
         </div>
 
         {/* Team grid */}
-        <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
+        <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {team.map((member) => (
             <div
               key={member.index}
-              className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-surface transition-colors hover:border-border-strong hover:bg-background-secondary"
+              className="group relative flex flex-col border border-border bg-transparent transition-colors hover:border-border-strong hover:bg-white/[0.02]"
             >
               <div className="relative h-56 w-full overflow-hidden border-b border-border bg-background-secondary sm:h-64 lg:h-72">
                 <span className="absolute left-5 top-5 z-10 font-mono text-xs font-medium tracking-widest text-accent">
@@ -87,7 +87,7 @@ export default function TeamWork() {
                 <a
                   href={member.linkedin}
                   aria-label={`${member.name} on LinkedIn`}
-                  className="absolute right-5 top-5 z-10 flex h-8 w-8 items-center justify-center rounded-md border border-border bg-background/80 text-foreground-secondary transition-colors hover:border-border-strong hover:text-foreground"
+                   className="absolute right-5 top-5 z-10 flex h-8 w-8 items-center justify-center border border-border bg-background/80 text-foreground-secondary transition-colors hover:border-border-strong hover:text-foreground"
                 >
                   <svg
                     className="h-4 w-4"
@@ -140,7 +140,7 @@ export default function TeamWork() {
           </div>
           <a
             href="#contact"
-            className="group relative inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition-transform hover:scale-[1.02]"
+            className="relative inline-flex items-center gap-2 bg-foreground px-6 py-3 text-sm font-medium text-background transition-transform hover:scale-[1.02]"
           >
             Start a Project
           </a>

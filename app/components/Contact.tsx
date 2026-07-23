@@ -154,7 +154,7 @@ export default function Contact() {
                     key={social.label}
                     href={social.href}
                     aria-label={social.label}
-                    className="flex h-11 w-11 items-center justify-center rounded-lg border border-border text-foreground-secondary transition-colors hover:border-border-strong hover:bg-surface hover:text-foreground"
+                    className="flex h-11 w-11 items-center justify-center border border-border text-foreground-secondary transition-colors hover:border-border-strong hover:bg-surface hover:text-foreground"
                   >
                     {social.icon}
                   </a>
@@ -276,7 +276,7 @@ export default function Contact() {
             <button
               type="submit"
               disabled={!agreed}
-              className="group mt-6 flex w-full items-center justify-center rounded-lg bg-foreground px-6 py-4 text-sm font-medium text-background transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+              className="mt-6 flex w-full items-center justify-center bg-foreground px-6 py-4 text-sm font-medium text-background transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
             >
               Send Message
             </button>
@@ -295,7 +295,7 @@ export default function Contact() {
           </div>
           <a
             href="#faq"
-            className="group relative inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-border-strong hover:bg-background-secondary"
+            className="relative inline-flex items-center gap-2 border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-border-strong hover:bg-background-secondary"
           >
             Visit FAQ
           </a>

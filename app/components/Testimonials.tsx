@@ -1,6 +1,6 @@
 import Continer from "./layout/Container";
 import { ReactNode } from "react";
-import { ArrowRight, Quote, Star, UserRound } from "lucide-react";
+import { Quote, Star, UserRound } from "lucide-react";
 
 interface Testimonial {
   index: string;
@@ -89,10 +89,9 @@ export default function Testimonials() {
             </p>
             <a
               href="#projects"
-              className="group inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-border-strong hover:bg-surface"
+              className="inline-flex items-center gap-2 border border-border px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-border-strong hover:bg-surface"
             >
               View Our Work
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </a>
           </div>
         </div>
@@ -102,7 +101,7 @@ export default function Testimonials() {
           {testimonials.map((t) => (
             <div
               key={t.index}
-              className="group relative flex flex-col justify-between rounded-2xl border border-border bg-surface p-8 transition-colors hover:border-border-strong hover:bg-background-secondary"
+              className="group relative flex flex-col justify-between border border-border bg-transparent p-8 transition-colors hover:border-border-strong hover:bg-white/[0.02]"
             >
               <div>
                 <div className="flex items-center justify-between">
@@ -157,10 +156,9 @@ export default function Testimonials() {
           </div>
           <a
             href="#contact"
-            className="group relative inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition-transform hover:scale-[1.02]"
+            className="relative inline-flex items-center gap-2 bg-foreground px-6 py-3 text-sm font-medium text-background transition-transform hover:scale-[1.02]"
           >
             Start a Project
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </a>
         </div>
       </Continer>
