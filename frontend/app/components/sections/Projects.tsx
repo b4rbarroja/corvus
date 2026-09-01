@@ -55,7 +55,15 @@ function VideoCard({
       aria-hidden="true"
       disablePictureInPicture
       controlsList="nodownload noplaybackrate noremoteplayback"
-      className="h-full w-full object-cover"
+      className="
+        h-full
+        w-full
+        object-cover
+        transition-transform
+        duration-500
+        will-change-transform
+        
+      "
     />
   );
 }
