@@ -16,12 +16,6 @@ const VIDEOS = [
 /*                              Video Card                                    */
 /* -------------------------------------------------------------------------- */
 
-interface VideoItem {
-  element: HTMLVideoElement;
-  src: string;
-  isLoaded: boolean;
-}
-
 function VideoCard({
   src,
   id,
@@ -29,7 +23,7 @@ function VideoCard({
 }: {
   src: string;
   id: string;
-  registerVideo: (id: string, el: HTMLVideoElement | null, src: string) => void;
+  registerVideo: (id: string, el: HTMLVideoElement | null) => void;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -38,20 +32,22 @@ function VideoCard({
     if (video) {
       video.muted = true;
       video.defaultMuted = true;
+      registerVideo(id, video);
     }
-    registerVideo(id, video, src);
     return () => {
-      registerVideo(id, null, src);
+      registerVideo(id, null);
     };
-  }, [id, src, registerVideo]);
+  }, [id, registerVideo]);
 
   return (
     <video
       ref={videoRef}
+      src={src}
+      autoPlay
       muted
       loop
       playsInline
-      preload="none"
+      preload="metadata"
       aria-hidden="true"
       disablePictureInPicture
       controlsList="nodownload noplaybackrate noremoteplayback"
@@ -62,7 +58,6 @@ function VideoCard({
         transition-transform
         duration-500
         will-change-transform
-      
       "
     />
   );
@@ -77,17 +72,34 @@ export default function Projects() {
   const row1Ref = useRef<HTMLDivElement>(null);
   const row2Ref = useRef<HTMLDivElement>(null);
 
-  const videoRegistry = useRef<Map<string, VideoItem>>(new Map());
+  const videoRegistry = useRef<Map<string, HTMLVideoElement>>(new Map());
+  const isSectionActiveRef = useRef(false);
+
+  const playAllVideos = useCallback(() => {
+    videoRegistry.current.forEach((video) => {
+      if (video && video.paused) {
+        video.play().catch(() => {
+          // Ignore autoplay restriction or interruption errors
+        });
+      }
+    });
+  }, []);
+
+  const pauseAllVideos = useCallback(() => {
+    videoRegistry.current.forEach((video) => {
+      if (video && !video.paused) {
+        video.pause();
+      }
+    });
+  }, []);
 
   const registerVideo = useCallback(
-    (id: string, el: HTMLVideoElement | null, src: string) => {
+    (id: string, el: HTMLVideoElement | null) => {
       if (el) {
-        const existing = videoRegistry.current.get(id);
-        videoRegistry.current.set(id, {
-          element: el,
-          src,
-          isLoaded: existing ? existing.isLoaded : false,
-        });
+        videoRegistry.current.set(id, el);
+        if (isSectionActiveRef.current && !document.hidden && el.paused) {
+          el.play().catch(() => {});
+        }
       } else {
         videoRegistry.current.delete(id);
       }
@@ -99,137 +111,43 @@ export default function Projects() {
     const section = sectionRef.current;
     if (!section) return;
 
-    let isSectionActive = false;
-    let intervalId: ReturnType<typeof setInterval> | null = null;
-
-    const checkVideos = () => {
-      if (!isSectionActive || document.hidden) return;
-
-      const viewportWidth =
-        window.innerWidth || document.documentElement.clientWidth || 0;
-      const viewportHeight =
-        window.innerHeight || document.documentElement.clientHeight || 0;
-
-      // Preload buffer: start downloading source slightly before entering screen
-      const PRELOAD_BUFFER = 200;
-
-      videoRegistry.current.forEach((item) => {
-        const { element, src, isLoaded } = item;
-        if (!element) return;
-
-        const rect = element.getBoundingClientRect();
-
-        // Check if video is visible within the screen frame
-        const isInScreen =
-          rect.right > 0 &&
-          rect.left < viewportWidth &&
-          rect.bottom > 0 &&
-          rect.top < viewportHeight;
-
-        // Check if video is close enough to preload source
-        const isNearScreen =
-          rect.right > -PRELOAD_BUFFER &&
-          rect.left < viewportWidth + PRELOAD_BUFFER &&
-          rect.bottom > -PRELOAD_BUFFER &&
-          rect.top < viewportHeight + PRELOAD_BUFFER;
-
-        // Lazy-load source before entering viewport
-        if (isNearScreen && !isLoaded) {
-          element.src = src;
-          element.load();
-          item.isLoaded = true;
-        }
-
-        // Play when visible on screen, stop when outside screen frame to save CPU
-        if (isInScreen) {
-          if (element.paused) {
-            const playPromise = element.play();
-            if (playPromise !== undefined) {
-              playPromise.catch(() => {
-                // Ignore autoplay or interruption errors
-              });
-            }
-          }
-        } else {
-          if (!element.paused) {
-            element.pause();
-          }
-        }
-      });
-    };
-
-    const pauseAllVideos = () => {
-      videoRegistry.current.forEach((item) => {
-        if (item.element && !item.element.paused) {
-          item.element.pause();
-        }
-      });
-    };
-
-    const startChecking = () => {
-      if (intervalId !== null) return;
-      checkVideos();
-      // Continuously check during marquee animation (every 150ms)
-      intervalId = setInterval(checkVideos, 150);
-    };
-
-    const stopChecking = () => {
-      if (intervalId !== null) {
-        clearInterval(intervalId);
-        intervalId = null;
-      }
-      pauseAllVideos();
-    };
-
-    // 1. Observe Section visibility in viewport
+    // Observe Section visibility in viewport
     const observer = new IntersectionObserver(
       ([entry]) => {
+        isSectionActiveRef.current = entry.isIntersecting;
         if (entry.isIntersecting) {
-          isSectionActive = true;
           if (!document.hidden) {
-            startChecking();
+            playAllVideos();
           }
         } else {
-          isSectionActive = false;
-          stopChecking();
+          pauseAllVideos();
         }
       },
       {
-        rootMargin: "100px 0px",
+        rootMargin: "200px 0px",
         threshold: 0,
       },
     );
 
     observer.observe(section);
 
-    // 2. Handle tab visibility changes
+    // Handle tab visibility changes
     const handleVisibilityChange = () => {
       if (document.hidden) {
-        stopChecking();
-      } else if (isSectionActive) {
-        startChecking();
-      }
-    };
-
-    // 3. Handle scroll and resize events
-    const handleScrollOrResize = () => {
-      if (isSectionActive && !document.hidden) {
-        checkVideos();
+        pauseAllVideos();
+      } else if (isSectionActiveRef.current) {
+        playAllVideos();
       }
     };
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
-    window.addEventListener("scroll", handleScrollOrResize, { passive: true });
-    window.addEventListener("resize", handleScrollOrResize, { passive: true });
 
     return () => {
       observer.disconnect();
       document.removeEventListener("visibilitychange", handleVisibilityChange);
-      window.removeEventListener("scroll", handleScrollOrResize);
-      window.removeEventListener("resize", handleScrollOrResize);
-      stopChecking();
+      pauseAllVideos();
     };
-  }, []);
+  }, [playAllVideos, pauseAllVideos]);
 
   const setRowSpeed = (
     containerRef: React.RefObject<HTMLDivElement | null>,
