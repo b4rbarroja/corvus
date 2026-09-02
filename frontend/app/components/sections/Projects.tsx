@@ -6,10 +6,10 @@ import TextReveal from "../ui/TextReveal";
 
 const VIDEOS = [
   "https://res.cloudinary.com/oilun9qx/video/upload/v1788382950/Pharam2output.mp4",
-  "https://res.cloudinary.com/oilun9qx/video/upload/v1788382950/takya2output.mp4",
-  "https://res.cloudinary.com/oilun9qx/video/upload/v1788382950/kings2output.mp4",
-  "https://res.cloudinary.com/oilun9qx/video/upload/v1788382944/tabarak2output.mp4",
-  "https://res.cloudinary.com/oilun9qx/video/upload/v1788382922/bake2output.mp4",
+  "https://res.cloudinary.com/oilun9qx/video/upload/so_1.6,eo_37.7/v1788382950/takya2output.mp4",
+  "https://res.cloudinary.com/oilun9qx/video/upload/so_0.8,eo_43.3/v1788382950/kings2output.mp4",
+  "https://res.cloudinary.com/oilun9qx/video/upload/so_1.6,eo_39.8/v1788382944/tabarak2output.mp4",
+  "https://res.cloudinary.com/oilun9qx/video/upload/so_0.7/v1788382922/bake2output.mp4",
 ];
 
 /* -------------------------------------------------------------------------- */
@@ -47,7 +47,7 @@ function VideoCard({
       muted
       loop
       playsInline
-      preload="metadata"
+      preload="auto"
       aria-hidden="true"
       disablePictureInPicture
       controlsList="nodownload noplaybackrate noremoteplayback"
