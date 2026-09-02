@@ -5,11 +5,11 @@ import Container from "../layout/Container";
 import TextReveal from "../ui/TextReveal";
 
 const VIDEOS = [
-  "https://kbwctahdlaloeuidjqob.supabase.co/storage/v1/object/public/jwdjjjqwjd/takya.mp4",
-  "https://kbwctahdlaloeuidjqob.supabase.co/storage/v1/object/public/jwdjjjqwjd/kingsfield(1).mp4",
-  "https://kbwctahdlaloeuidjqob.supabase.co/storage/v1/object/public/jwdjjjqwjd/Tabarak_Compressed.mp4",
-  "https://kbwctahdlaloeuidjqob.supabase.co/storage/v1/object/public/jwdjjjqwjd/compressed_output.mp4",
-  "https://kbwctahdlaloeuidjqob.supabase.co/storage/v1/object/public/jwdjjjqwjd/pharma.mp4",
+  "https://res.cloudinary.com/oilun9qx/video/upload/v1788382950/Pharam2output.mp4",
+  "https://res.cloudinary.com/oilun9qx/video/upload/v1788382950/takya2output.mp4",
+  "https://res.cloudinary.com/oilun9qx/video/upload/v1788382950/kings2output.mp4",
+  "https://res.cloudinary.com/oilun9qx/video/upload/v1788382944/tabarak2output.mp4",
+  "https://res.cloudinary.com/oilun9qx/video/upload/v1788382922/bake2output.mp4",
 ];
 
 /* -------------------------------------------------------------------------- */
@@ -62,7 +62,7 @@ function VideoCard({
         transition-transform
         duration-500
         will-change-transform
-        
+      
       "
     />
   );
